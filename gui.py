@@ -2,13 +2,10 @@
 
 from PyQt5.QtWidgets import QTableView, QPushButton
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QDialogButtonBox
 from PyQt5.QtWidgets import QLabel, QLineEdit
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
-from PyQt5.QtWidgets import QRadioButton, QGroupBox
 
 
 class Ui_Widget(object):
@@ -26,8 +23,8 @@ class Ui_Widget(object):
         Silnik2 = QLabel("Silnik 2", self)
         Silnik2.setStyleSheet('font-size: 20pt; font-family: Arial')
         Silnik2.setAlignment(Qt.AlignCenter)
-        Chlodzenie = QLabel("Cooler",self)
-        Chlodzenie2 = QLabel("Cooler",self)
+        Chlodzenie = QLabel("Chłodnica",self)
+        Chlodzenie2 = QLabel("Chłodnica",self)
         Temperatura = QLabel("Temperatura:", self)
         Temperatura2 = QLabel("Temperatura:", self)
         self.temperatura1 = QLineEdit()
@@ -36,8 +33,8 @@ class Ui_Widget(object):
         self.bledy2 = QLineEdit()
 
         # przyciski Push ###
-        self.kasujBledy1 = QPushButton("Kasuj Bledy")
-        self.kasujBledy2 = QPushButton("Kasuj Bledy")
+        self.kasujBledy1 = QPushButton("Kasuj Błędy")
+        self.kasujBledy2 = QPushButton("Kasuj Błędy")
 
         # Slider i LCDNumber ###
         self.suwak = QSlider(Qt.Horizontal)
@@ -130,49 +127,5 @@ class Ui_Widget(object):
         ukladV.addLayout(ukladT)
 
         # właściwości widżetu ###
-        self.setWindowTitle("Symulator lini produkcyjnej")
+        self.setWindowTitle("Symulator linii produkcyjnej")
         self.resize(800, 600)
-
-class LoginDialog(QDialog):
-    """ Okno dialogowe logowania """
-
-    def __init__(self, parent=None):
-        super(LoginDialog, self).__init__(parent)
-
-        # etykiety, pola edycyjne i przyciski ###
-        loginLbl = QLabel('Login')
-        hasloLbl = QLabel('Hasło')
-        self.login = QLineEdit()
-        self.haslo = QLineEdit()
-        self.przyciski = QDialogButtonBox(
-            QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
-            Qt.Horizontal, self)
-
-        # układ główny ###
-        uklad = QGridLayout(self)
-        uklad.addWidget(loginLbl, 0, 0)
-        uklad.addWidget(self.login, 0, 1)
-        uklad.addWidget(hasloLbl, 1, 0)
-        uklad.addWidget(self.haslo, 1, 1)
-        uklad.addWidget(self.przyciski, 2, 0, 2, 0)
-
-        # sygnały i sloty ###
-        self.przyciski.accepted.connect(self.accept)
-        self.przyciski.rejected.connect(self.reject)
-
-        # właściwości widżetu ###
-        self.setModal(True)
-        self.setWindowTitle('Logowanie')
-
-    def loginHaslo(self):
-        return (self.login.text().strip(),
-                self.haslo.text().strip())
-
-    # metoda statyczna, tworzy dialog i zwraca (login, haslo, ok)
-    @staticmethod
-    def getLoginHaslo(parent=None):
-        dialog = LoginDialog(parent)
-        dialog.login.setFocus()
-        ok = dialog.exec_()
-        login, haslo = dialog.loginHaslo()
-        return (login, haslo, ok == QDialog.Accepted)
