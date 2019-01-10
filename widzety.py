@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5.QtWidgets import QMessageBox, QInputDialog
 from gui import Ui_Widget
 from PyQt5 import QtCore, QtGui
-import PyQt5.QtMultimedia as M
 import math
 import random
 
@@ -64,7 +63,7 @@ class Zadania(QWidget, Ui_Widget):
         self.actualTemp1 = self.temp1
         self.t1 = 0
         self.obrotySilnika1 = wartosc / 4
-        self.lcd.display(wartosc)
+        self.lcd.setText(str(wartosc))
 
     def wartoscCooler1(self, wartosc):
         self.counter = 0
@@ -78,7 +77,7 @@ class Zadania(QWidget, Ui_Widget):
         self.actualTemp2 = self.temp2
         self.t2 = 0
         self.obrotySilnika2 = wartosc / 4
-        self.lcd2.display(wartosc)
+        # self.lcd2.display(wartosc)
 
     def wartoscCooler2(self, wartosc):
         self.counter = 0
@@ -182,5 +181,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     okno = MainWindow()
     okno.show()
-    okno.move(350, 200)
+    okno.resize(800,800)
+    # okno.move(350, 200)
     sys.exit(app.exec_())
