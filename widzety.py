@@ -10,17 +10,19 @@ import math
 import random
 
 
+
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.zadania = Zadania()
         self.setCentralWidget(self.zadania)
 
-
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction("O autorze")
+        menubar.setFont(QtGui.QFont("Cantarell", 14, QtGui.QFont.Light))
+        fileMenu = menubar.addMenu('O autorze')
+        fileMenu.setFont(QtGui.QFont("Cantarell", 12, QtGui.QFont.Light))
 
+        fileMenu.addAction("Dawid Hirsz")
 
 class Zadania(QWidget, Ui_Widget):
 
@@ -70,21 +72,21 @@ class Zadania(QWidget, Ui_Widget):
         self.actualTemp1 = self.temp1
         self.t1 = 0
         self.obrotyCoolera1 = (wartosc / 50) + 1
-        self.lcd1.display(wartosc)
+        self.lcd1.setText(str(wartosc))
 
     def wartoscSilnik2(self, wartosc):
         self.counter = 0
         self.actualTemp2 = self.temp2
         self.t2 = 0
         self.obrotySilnika2 = wartosc / 4
-        # self.lcd2.display(wartosc)
+        self.lcd2.setText(str(wartosc))
 
     def wartoscCooler2(self, wartosc):
         self.counter = 0
         self.actualTemp2 = self.temp2
         self.t2 = 0
         self.obrotyCoolera2 = (wartosc / 50) + 1
-        self.lcd3.display(wartosc)
+        self.lcd3.setText(str(wartosc))
 
     def obliczTemperature(self, temp, actualTemp, t, obrotySilnika, obrotyCoolera):
 
@@ -181,6 +183,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     okno = MainWindow()
     okno.show()
-    okno.resize(800,800)
-    # okno.move(350, 200)
+    okno.setWindowTitle("Symulator linii produkcyjnej")
+    # okno.resize(800,800)
+    okno.resize(500, 350)
     sys.exit(app.exec_())
