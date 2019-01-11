@@ -97,45 +97,45 @@ class ProductionLineViewer( Gtk.Window ):
         button.connect("clicked", self.kasowanieBledow1)
         vbox_left.pack_start(button, True, True, 0)
 
-        silnik2 = Gtk.Label( label = "<b>Silnik 2</b>", use_markup = True )
-        vbox_right.pack_start(silnik2, True, True, 0)
+        silnik2 = Gtk.Label( label ="<b><big>Silnik 2</big></b>", use_markup = True )
+        vbox_right.pack_start(silnik2, True, True, 10)
 
-        # self.cooler1Label = Gtk.Label(label ="<b>Obroty:</b>", use_markup = True)
-        # vbox_left.pack_start(self.cooler1Label, True, True, 0)
-        #
-        # self.silnik1LCD = Gtk.Label("0")
-        # vbox_left.pack_start(self.silnik1LCD, True, True, 0)
-        # ad1 = Gtk.Adjustment(0, 0, 1000, 1, 1, 0)
-        # self.silnik1Obroty = Gtk.Scale(
-        #     orientation=Gtk.Orientation.HORIZONTAL, adjustment=ad1, draw_value=False)
-        # self.silnik1Obroty.set_digits(0)
-        # self.silnik1Obroty.connect("value-changed", self.torqueEngineChange1)
-        # vbox_left.pack_start(self.silnik1Obroty, True, True, 0)
-        #
-        # self.cooler1Label = Gtk.Label(label ="<b>Chłodnica:</b>", use_markup = True)
-        # vbox_left.pack_start(self.cooler1Label, True, True, 0)
-        #
-        # self.cooler1LCD = Gtk.Label("0")
-        # vbox_left.pack_start(self.cooler1LCD, True, True, 0)
-        # ad2 = Gtk.Adjustment(0, 0, 50, 1, 1, 0)
-        # self.cooler1Obroty = Gtk.Scale(
-        #     orientation=Gtk.Orientation.HORIZONTAL, adjustment=ad2, draw_value=False)
-        # self.cooler1Obroty.set_digits(0)
-        # self.cooler1Obroty.connect("value-changed", self.torqueCoolerChange1)
-        # vbox_left.pack_start(self.cooler1Obroty, True, True, 0)
-        #
-        # temp1Label = Gtk.Label( label = "<b>Temperatura:</b>", use_markup = True )
-        # vbox_left.pack_start(temp1Label, True, True, 0)
-        #
-        # self.temp1LCD = Gtk.Label("0")
-        # vbox_left.pack_start(self.temp1LCD, True, True, 0)
-        #
-        # self.bledy1 = Gtk.Label()
-        # vbox_left.pack_start(self.bledy1, True, True, 0)
-        #
-        # button = Gtk.Button( label = "Kasuj błędy")
-        # button.connect("clicked", self.kasowanieBledow1)
-        # vbox_left.pack_start(button, True, True, 0)
+        obroty2Label = Gtk.Label(label ="<b>Obroty:</b>", use_markup = True)
+        vbox_right.pack_start(obroty2Label, True, True, 0)
+
+        self.silnik2LCD = Gtk.Label("0")
+        vbox_right.pack_start(self.silnik2LCD, True, True, 0)
+        ad3 = Gtk.Adjustment(0, 0, 1000, 1, 1, 0)
+        self.silnik2Obroty = Gtk.Scale(
+            orientation=Gtk.Orientation.HORIZONTAL, adjustment=ad3, draw_value=False)
+        self.silnik2Obroty.set_digits(0)
+        self.silnik2Obroty.connect("value-changed", self.torqueEngineChange2)
+        vbox_right.pack_start(self.silnik2Obroty, True, True, 0)
+
+        self.cooler2Label = Gtk.Label(label ="<b>Chłodnica:</b>", use_markup = True)
+        vbox_right.pack_start(self.cooler2Label, True, True, 0)
+
+        self.cooler2LCD = Gtk.Label("0")
+        vbox_right.pack_start(self.cooler2LCD, True, True, 0)
+        ad4 = Gtk.Adjustment(0, 0, 50, 1, 1, 0)
+        self.cooler2Obroty = Gtk.Scale(
+            orientation=Gtk.Orientation.HORIZONTAL, adjustment=ad4, draw_value=False)
+        self.cooler2Obroty.set_digits(0)
+        self.cooler2Obroty.connect("value-changed", self.torqueCoolerChange2)
+        vbox_right.pack_start(self.cooler2Obroty, True, True, 0)
+
+        temp2Label = Gtk.Label( label = "<b>Temperatura:</b>", use_markup = True )
+        vbox_right.pack_start(temp2Label, True, True, 0)
+
+        self.temp2LCD = Gtk.Label("0")
+        vbox_right.pack_start(self.temp2LCD, True, True, 0)
+
+        self.bledy2 = Gtk.Label()
+        vbox_right.pack_start(self.bledy2, True, True, 0)
+
+        button = Gtk.Button( label = "Kasuj błędy")
+        button.connect("clicked", self.kasowanieBledow2)
+        vbox_right.pack_start(button, True, True, 0)
 
         vbox.pack_start(hbox, True, True, 0)
         self.add (vbox)
@@ -148,12 +148,26 @@ class ProductionLineViewer( Gtk.Window ):
         self.t1 = 0
         self.obrotySilnika1 = self.silnik1Obroty.get_value() / 4
 
+    def torqueEngineChange2(self, event):
+        self.silnik2LCD.set_text(str(int(self.silnik2Obroty.get_value())))
+        self.counter = 0
+        self.actualTemp2 = self.temp2
+        self.t2 = 0
+        self.obrotySilnika2 = self.silnik2Obroty.get_value() / 4
+
     def torqueCoolerChange1(self, event):
         self.cooler1LCD.set_text(str(int(self.cooler1Obroty.get_value())))
         self.counter = 0
         self.actualTemp1 = self.temp1
         self.t1 = 0
         self.obrotyCoolera1 = (self.cooler1Obroty.get_value() / 50) + 1
+
+    def torqueCoolerChange2(self, event):
+        self.cooler2LCD.set_text(str(int(self.cooler2Obroty.get_value())))
+        self.counter = 0
+        self.actualTemp2 = self.temp2
+        self.t2 = 0
+        self.obrotyCoolera2 = (self.cooler2Obroty.get_value() / 50) + 1
 
     def timerEvent(self):
         self.temp1, self.t1 = self.obliczTemperature(self.temp1, self.actualTemp1, self.t1, self.obrotySilnika1,
@@ -162,11 +176,11 @@ class ProductionLineViewer( Gtk.Window ):
         self.temp1LCD.set_text(temp)
         self.generujBledy1()
 
-        # temp2, self.t2 = self.obliczTemperature(self.t2, self.actualTemp2, self.t2, self.suwak2.get_value(),
-        #                                              self.cooler2.get_value())
-        # temp2 = ("%.2f" % temp2)
-        # self.temp2.set_text(temp2)
-        # self.generujBledy2()
+        self.temp2, self.t2 = self.obliczTemperature(self.temp2, self.actualTemp2, self.t2, self.obrotySilnika2,
+                                                     self.obrotyCoolera2)
+        temp2 = ("%.2f" % self.temp2)
+        self.temp2LCD.set_text(temp2)
+        self.generujBledy2()
 
         return True
 
