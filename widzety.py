@@ -9,7 +9,23 @@ from PyQt5 import QtCore, QtGui
 import math
 import random
 
+EMPTY_STRING = "                   "
 
+ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników tak aby\n " \
+        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\n jeden służy do zwiększania " \
+        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu można kontrolować temperatury."
+
+def showdialog():
+    msg = QMessageBox()
+    # msg.setIcon(QMessageBox.Information)
+
+    # msg.setText("This is a message box")
+    # msg.setInformativeText("This is additional information")
+    msg.setWindowTitle("O programie")
+    msg.setText(ABOUT)
+
+
+    retval = msg.exec_()
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -19,10 +35,22 @@ class MainWindow(QMainWindow):
 
         menubar = self.menuBar()
         menubar.setFont(QtGui.QFont("Cantarell", 14, QtGui.QFont.Light))
-        fileMenu = menubar.addMenu('O autorze')
+        fileMenu = menubar.addMenu('Pomoc')
         fileMenu.setFont(QtGui.QFont("Cantarell", 12, QtGui.QFont.Light))
 
-        fileMenu.addAction("Dawid Hirsz")
+        fileMenu.addAction("O programie")
+        # fileMenu.triggered.connect(QMessageBox.information(self, 'Błąd',
+        #                         'Pusty login lub hasło!', QMessageBox.Ok))
+
+        fileMenu.triggered.connect(showdialog)
+
+    # def newCall(self, QDialog):
+    #     def __init__(self, parent=None):
+    #         super(self).__init__(parent)
+    #
+    #         # etykiety, pola edycyjne i przyciski ###
+    #         loginLbl = QtGui.QLabel('Login')
+    #         self.setModal(True)
 
 class Zadania(QWidget, Ui_Widget):
 
@@ -128,50 +156,50 @@ class Zadania(QWidget, Ui_Widget):
         self.counter += 1
 
         if self.temp1 > 90 and not self.jestBlad1:
-            self.bledy1.setText("SILNIK JEST PRZEGRZANY !!!")
+            self.bledy1.setText("SILNIK PRZEGRZANY")
             self.jestBlad1 = True
 
-        if (random.randint(1, 100) == 2 and not self.jestBlad1):
+        if (random.randint(1, 100) == 2 and not self.jestBlad1 and self.actualTemp1):
             rand = random.randint(1, 4)
             self.jestBlad1 = True
             if (rand == 1):
-                self.bledy1.setText("NIE DZIALA JEDEN Z CYLINDROW")
+                self.bledy1.setText("MAŁO PALIWA")
             elif (rand == 2):
-                self.bledy1.setText("MALO OLEJU")
+                self.bledy1.setText("MAŁO OLEJU")
             elif (rand == 3):
-                self.bledy1.setText("ZA DUZO SPALIN")
+                self.bledy1.setText("ZA DUŻO SPALIN")
             elif (rand == 4):
-                self.bledy1.setText("NIEZNANY BLAD")
+                self.bledy1.setText("NIEZNANY BŁĄD")
 
     def generujBledy2(self):
 
         self.counter += 1
 
         if self.temp2 > 90 and not self.jestBlad2:
-            self.bledy2.setText("SILNIK JEST PRZEGRZANY !!!")
+            self.bledy2.setText("SILNIK PRZEGRZANY")
             self.jestBlad2 = True
 
-        if (random.randint(1, 100) == 2 and not self.jestBlad2):
+        if (random.randint(1, 100) == 2 and not self.jestBlad2 and self.actualTemp2):
             rand = random.randint(1, 4)
             self.jestBlad2 = True
             if (rand == 1):
-                self.bledy2.setText("NIE DZIALA JEDEN Z CYLINDROW")
+                self.bledy2.setText("MAŁO PALIWA")
             elif (rand == 2):
-                self.bledy2.setText("MALO OLEJU")
+                self.bledy2.setText("MAŁO OLEJU")
             elif (rand == 3):
-                self.bledy2.setText("ZA DUZO SPALIN")
+                self.bledy2.setText("ZA DUŻO SPALIN")
             elif (rand == 4):
-                self.bledy2.setText("NIEZNANY BLAD")
+                self.bledy2.setText("NIEZNANY BŁĄD")
 
     def kasowanieBledow1(self):
         self.counter = 0
         self.jestBlad1 = False
-        self.bledy1.setText("")
+        self.bledy1.setText(EMPTY_STRING)
 
     def kasowanieBledow2(self):
         self.counter = 0
         self.jestBlad2 = False
-        self.bledy2.setText("")
+        self.bledy2.setText(EMPTY_STRING)
 
     def koniec(self):
         self.close()

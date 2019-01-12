@@ -8,10 +8,25 @@ from gi.repository import Gtk, GObject, Gio
 import math
 import random
 
-settings = Gio.Settings('org.gnome.desktop.interface')
-font_name = settings.get_string('font-name')
+EMPTY_STRING = "                   "
 
-print(font_name)
+ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników tak aby\n " \
+        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\n jeden służy do zwiększania " \
+        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu można kontrolować temperatury."
+
+class DialogExample(Gtk.Dialog):
+
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "O programie", parent, 0,
+            (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+
+        # self.set_default_size(150, 100)
+
+        label = Gtk.Label(ABOUT)
+
+        box = self.get_content_area()
+        box.add(label)
+        self.show_all()
 
 class ProductionLineViewer( Gtk.Window ):
     def __init__(self):
@@ -38,9 +53,13 @@ class ProductionLineViewer( Gtk.Window ):
         #menuBar
         menuBar = Gtk.MenuBar()
         aboutmenu = Gtk.Menu()
-        about = Gtk.MenuItem("O autorze")
+        about = Gtk.MenuItem("Pomoc")
         about.set_submenu(aboutmenu)
-        author = Gtk.MenuItem("Dawid Hirsz")
+        # author = Gtk.EventBox()
+        # label = Gtk.Label("Right-click to see the popup menu.")
+        # author.add(label)
+        author = Gtk.MenuItem("O programie")
+        author.connect("button-press-event", self.on_button_clicked)
         aboutmenu.append(author)
         menuBar.append(about)
 
@@ -90,7 +109,7 @@ class ProductionLineViewer( Gtk.Window ):
         self.temp1LCD = Gtk.Label("0")
         vbox_left.pack_start(self.temp1LCD, True, True, 0)
 
-        self.bledy1 = Gtk.Label()
+        self.bledy1 = Gtk.Label(EMPTY_STRING)
         vbox_left.pack_start(self.bledy1, True, True, 0)
 
         button = Gtk.Button( label = "Kasuj błędy")
@@ -130,7 +149,7 @@ class ProductionLineViewer( Gtk.Window ):
         self.temp2LCD = Gtk.Label("0")
         vbox_right.pack_start(self.temp2LCD, True, True, 0)
 
-        self.bledy2 = Gtk.Label()
+        self.bledy2 = Gtk.Label(EMPTY_STRING)
         vbox_right.pack_start(self.bledy2, True, True, 0)
 
         button = Gtk.Button( label = "Kasuj błędy")
@@ -140,6 +159,11 @@ class ProductionLineViewer( Gtk.Window ):
         vbox.pack_start(hbox, True, True, 0)
         self.add (vbox)
         self.set_default_size(500, 350)
+
+    def on_button_clicked(self, event, dada):
+        dialog = DialogExample(self)
+        dialog.run()
+        dialog.destroy()
 
     def torqueEngineChange1(self, event):
         self.silnik1LCD.set_text(str(int(self.silnik1Obroty.get_value())))
@@ -214,50 +238,50 @@ class ProductionLineViewer( Gtk.Window ):
         self.counter += 1
 
         if self.temp1 > 90 and not self.jestBlad1:
-            self.bledy1.set_text("SILNIK JEST PRZEGRZANY !!!")
+            self.bledy1.set_text("SILNIK PRZEGRZANY")
             self.jestBlad1 = True
 
-        if (random.randint(1, 100) == 2 and not self.jestBlad1):
+        if (random.randint(1, 100) == 2 and not self.jestBlad1 and self.actualTemp1):
             rand = random.randint(1, 4)
             self.jestBlad1 = True
             if (rand == 1):
-                self.bledy1.set_text("NIE DZIALA JEDEN Z CYLINDROW")
+                self.bledy1.set_text("MAŁO PALIWA")
             elif (rand == 2):
-                self.bledy1.set_text("MALO OLEJU")
+                self.bledy1.set_text("MAŁO OLEJU")
             elif (rand == 3):
-                self.bledy1.set_text("ZA DUZO SPALIN")
+                self.bledy1.set_text("ZA DUŻO SPALIN")
             elif (rand == 4):
-                self.bledy1.set_text("NIEZNANY BLAD")
+                self.bledy1.set_text("NIEZNANY BŁĄD")
 
     def generujBledy2(self):
 
         self.counter += 1
 
         if self.temp2 > 90 and not self.jestBlad2:
-            self.bledy2.set_text("SILNIK JEST PRZEGRZANY !!!")
+            self.bledy2.set_text("SILNIK PRZEGRZANY")
             self.jestBlad2 = True
 
-        if (random.randint(1, 100) == 2 and not self.jestBlad2):
+        if (random.randint(1, 100) == 2 and not self.jestBlad2 and self.actualTemp2):
             rand = random.randint(1, 4)
             self.jestBlad2 = True
             if (rand == 1):
-                self.bledy2.set_text("NIE DZIALA JEDEN Z CYLINDROW")
+                self.bledy2.set_text("MAŁO PALIWA")
             elif (rand == 2):
-                self.bledy2.set_text("MALO OLEJU")
+                self.bledy2.set_text("MAŁO OLEJU")
             elif (rand == 3):
-                self.bledy2.set_text("ZA DUZO SPALIN")
+                self.bledy2.set_text("ZA DUŻO SPALIN")
             elif (rand == 4):
-                self.bledy2.set_text("NIEZNANY BLAD")
+                self.bledy2.set_text("NIEZNANY BŁĄD")
 
     def kasowanieBledow1(self, event):
         self.counter = 0
         self.jestBlad1 = False
-        self.bledy1.set_text("")
+        self.bledy1.set_text(EMPTY_STRING)
 
     def kasowanieBledow2(self, event):
         self.counter = 0
         self.jestBlad2 = False
-        self.bledy2.set_text("")
+        self.bledy2.set_text(EMPTY_STRING)
 
 w = ProductionLineViewer()
 w.connect("delete-event", Gtk.main_quit)

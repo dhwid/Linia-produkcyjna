@@ -8,6 +8,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5 import QtGui
 
+EMPTY_STRING = "                   "
+
 
 class Ui_Widget(object):
 
@@ -48,11 +50,11 @@ class Ui_Widget(object):
 
         self.temperatura1 = QLabel("0.00")
         self.temperatura1.setAlignment(Qt.AlignCenter)
-        self.bledy1 = QLabel()
+        self.bledy1 = QLabel(EMPTY_STRING)
         self.bledy1.setAlignment(Qt.AlignCenter)
         self.temperatura2 = QLabel("0.00")
         self.temperatura2.setAlignment(Qt.AlignCenter)
-        self.bledy2 = QLabel()
+        self.bledy2 = QLabel(EMPTY_STRING)
         self.bledy2.setAlignment(Qt.AlignCenter)
 
         # przyciski Push ###
