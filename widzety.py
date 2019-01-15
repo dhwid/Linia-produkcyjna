@@ -11,9 +11,11 @@ import random
 
 EMPTY_STRING = "                   "
 
-ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników tak aby\n " \
-        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\n jeden służy do zwiększania " \
-        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu można kontrolować temperatury."
+ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników, tak aby\n" \
+        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\njeden służy do zwiększania " \
+        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu możliwe jest " \
+        "kontrolowanie temperatury silników.\nDodatkowo w czasie trwania symulacji mogą wystąpić błędy,\nktórych " \
+        "kasowanie umożliwia przycisk u dołu ekranu."
 
 def showdialog():
     msg = QMessageBox()
@@ -21,9 +23,9 @@ def showdialog():
 
     # msg.setText("This is a message box")
     # msg.setInformativeText("This is additional information")
+    msg.setFont(QtGui.QFont("Cantarell", 12, QtGui.QFont.Light))
     msg.setWindowTitle("O programie")
     msg.setText(ABOUT)
-
 
     retval = msg.exec_()
 

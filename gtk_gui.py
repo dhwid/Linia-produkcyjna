@@ -10,9 +10,11 @@ import random
 
 EMPTY_STRING = "                   "
 
-ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników tak aby\n " \
-        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\n jeden służy do zwiększania " \
-        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu można kontrolować temperatury."
+ABOUT = "Zadaniem dyspozytora jest sterowanie prędkością obrotową silników, tak aby\n" \
+        "nie doprowadzić do ich przegrzania. Do swojej dyspozycji ma on dwa suwaki,\njeden służy do zwiększania " \
+        "obrotów silnika, drugi do zwiększania obrotów układu chłodzenia,\ndzięki czemu możliwe jest " \
+        "kontrolowanie temperatury silników.\nDodatkowo w czasie trwania symulacji mogą wystąpić błędy,\nktórych " \
+        "kasowanie umożliwia przycisk u dołu ekranu."
 
 class DialogExample(Gtk.Dialog):
 
