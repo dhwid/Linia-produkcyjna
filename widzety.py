@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5.QtWidgets import QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QAction
 from gui import Ui_Widget
 from PyQt5 import QtCore, QtGui
 import math
@@ -35,17 +35,26 @@ class MainWindow(QMainWindow):
         self.zadania = Zadania()
         self.setCentralWidget(self.zadania)
 
+        about = QAction("O programie", self)
+        about.triggered.connect(showdialog)
+
+        exit_app = QAction("Wyjdź", self)
+        exit_app.triggered.connect(self.close_application)
+
+
         menubar = self.menuBar()
         menubar.setFont(QtGui.QFont("Cantarell", 14, QtGui.QFont.Light))
-        fileMenu = menubar.addMenu('Pomoc')
-        fileMenu.setFont(QtGui.QFont("Cantarell", 12, QtGui.QFont.Light))
+        options = menubar.addMenu('Opcje')
+        options.setFont(QtGui.QFont("Cantarell", 12, QtGui.QFont.Light))
 
-        fileMenu.addAction("O programie")
-        # fileMenu.triggered.connect(QMessageBox.information(self, 'Błąd',
-        #                         'Pusty login lub hasło!', QMessageBox.Ok))
+        options.addAction(about)
+        options.addAction(exit_app)
 
-        fileMenu.triggered.connect(showdialog)
-
+        # options.addAction("O programie")
+        # options.triggered.connect(showdialog)
+        #
+        # close = menubar.addMenu("Wyjdź")
+        # close.trigerred.connect(sys.exit(app.exec_()))
     # def newCall(self, QDialog):
     #     def __init__(self, parent=None):
     #         super(self).__init__(parent)
@@ -53,6 +62,9 @@ class MainWindow(QMainWindow):
     #         # etykiety, pola edycyjne i przyciski ###
     #         loginLbl = QtGui.QLabel('Login')
     #         self.setModal(True)
+
+    def close_application(self):
+        sys.exit()
 
 class Zadania(QWidget, Ui_Widget):
 

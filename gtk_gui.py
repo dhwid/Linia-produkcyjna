@@ -55,7 +55,7 @@ class ProductionLineViewer( Gtk.Window ):
         #menuBar
         menuBar = Gtk.MenuBar()
         aboutmenu = Gtk.Menu()
-        about = Gtk.MenuItem("Pomoc")
+        about = Gtk.MenuItem("Opcje")
         about.set_submenu(aboutmenu)
         # author = Gtk.EventBox()
         # label = Gtk.Label("Right-click to see the popup menu.")
@@ -63,6 +63,11 @@ class ProductionLineViewer( Gtk.Window ):
         author = Gtk.MenuItem("O programie")
         author.connect("button-press-event", self.on_button_clicked)
         aboutmenu.append(author)
+
+        exit = Gtk.MenuItem("Wyjdź")
+        exit.connect("activate", Gtk.main_quit)
+        aboutmenu.append(exit)
+
         menuBar.append(about)
 
         vbox = Gtk.VBox(False, 2)
